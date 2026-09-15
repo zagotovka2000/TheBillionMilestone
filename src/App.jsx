@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useTelegram } from './hooks/useTelegram';
+import Loader from './components/Loader';
+import SpaceView from './space/SpaceView';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const { tg, user, ready } = useTelegram();
+  const { i18n } = useTranslation();
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const [booting, setBooting] = useState(true);
+
+  useEffect(() => {
+    if (!ready) return;
+    const lang = (user?.language_code || 'en').slice(0, 2);
+    const supported = ['ru', 'en', 'es'];
+    i18n.changeLanguage(supported.includes(lang) ? lang : 'en');
+    setBooting(false);
+  }, [ready, user, i18n]);
+
+  useEffect(() => {
+    if (!tg) return;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor?.('#030712');
+    tg.setBackgroundColor?.('#030712');
+    tg.disableVerticalSwipes?.();
+  }, [tg]);
+
+  if (booting) return <Loader fullscreen />;
+
+  return <SpaceView />;
 }
-
-export default App

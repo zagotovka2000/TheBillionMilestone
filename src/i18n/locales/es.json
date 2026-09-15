@@ -1,0 +1,20 @@
+{
+   "app": {
+     "title": "El Hito del Billón",
+     "subtitle": "1.000.000.000 líneas"
+   },
+   "nav": {
+     "file": "Archivo",
+     "line": "Línea",
+     "go": "Ir",
+     "prev": "Atrás",
+     "next": "Siguiente",
+     "random": "Aleatoria"
+   },
+   "viewer": {
+     "loading": "Cargando…",
+     "empty": "Línea vacía",
+     "error": "No se pudo cargar la línea",
+     "retry": "Reintentar"
+   }
+ }

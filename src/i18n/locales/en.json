@@ -1,0 +1,20 @@
+{
+   "app": {
+     "title": "The Billion Milestone",
+     "subtitle": "1,000,000,000 lines"
+   },
+   "nav": {
+     "file": "File",
+     "line": "Line",
+     "go": "Go",
+     "prev": "Prev",
+     "next": "Next",
+     "random": "Random"
+   },
+   "viewer": {
+     "loading": "Loading…",
+     "empty": "Empty line",
+     "error": "Failed to load line",
+     "retry": "Retry"
+   }
+ }
