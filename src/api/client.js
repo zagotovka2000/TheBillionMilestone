@@ -7,14 +7,26 @@ const api = axios.create({
   timeout: 15000,
 })
 
-export async function fetchLine(fileIndex, lineNumber, lang = 'en') {
-  const { data } = await api.get('/line', {
-    params: { file: fileIndex, line: lineNumber, lang },
+export async function registerUser({ user_id, username, invited_by }) {
+  const { data } = await api.post('/users/register', {
+    user_id,
+    username,
+    invited_by,
   })
   return data
 }
 
-export async function fetchMeta(lang = 'en') {
-  const { data } = await api.get('/meta', { params: { lang } })
+export async function getUser(userId) {
+  const { data } = await api.get(`/users/${userId}`)
+  return data
+}
+
+export async function getUserRank(userId) {
+  const { data } = await api.get(`/users/${userId}/rank`)
+  return data
+}
+
+export async function fetchLeaderboard({ limit = 50 } = {}) {
+  const { data } = await api.get('/leaderboard', { params: { limit } })
   return data
 }

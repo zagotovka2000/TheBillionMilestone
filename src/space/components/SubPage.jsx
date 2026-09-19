@@ -1,11 +1,15 @@
 import { TABS } from '../constants';
+import Invite from '../modules/server/Invite';
+import Faq from '../modules/static/Faq';
+
+const MODULES = {
+  3: Invite,
+  5: Faq,
+};
 
 export default function SubPage({ tabId, onBack }) {
   const tab = TABS.find((t) => t.id === tabId);
-  const metrics = ['PWR', 'NAV', 'SIG', 'SYS'].map((k, i) => ({
-    key: k,
-    fill: 40 + ((tabId * 13 + i * 17) % 55),
-  }));
+  const Module = MODULES[tabId];
 
   return (
     <div className="subpage">
@@ -22,27 +26,16 @@ export default function SubPage({ tabId, onBack }) {
           <h2 className="subpage-title">{tab?.label}</h2>
         </div>
 
-        <div className="holo-panel">
-          <div className="holo-scanline" />
-          <p className="holo-text">
-            Контент подстраницы {tabId}. Здесь будет размещён основной модуль
-            системы — данные, графики, управление или статус подсистемы.
-          </p>
-
-          <div className="metrics">
-            {metrics.map((m) => (
-              <div key={m.key} className="metric">
-                <span className="metric-key">{m.key}</span>
-                <span className="metric-bar">
-                  <span
-                    className="metric-fill"
-                    style={{ width: `${m.fill}%` }}
-                  />
-                </span>
-              </div>
-            ))}
+        {Module ? (
+          <Module />
+        ) : (
+          <div className="holo-panel">
+            <div className="holo-scanline" />
+            <p className="holo-text">
+              Модуль {tabId} в разработке. Скоро здесь появится содержимое.
+            </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
